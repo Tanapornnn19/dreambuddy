@@ -1,140 +1,217 @@
 <script setup lang="ts">
-const steps = [
+const { $t } = useI18n()
+
+const communityGoals = [
   {
-    number: '01',
-    title: 'Set Your Goal',
-    description: 'Create a savings goal with your target amount and deadline. Add a name and choose to make it public or private.',
-    icon: 'i-heroicons-flag',
-    color: 'secondary'
+    id: 1,
+    title: 'Dream House',
+    author: 'Sarah Johnson',
+    avatar: '👩',
+    icon: 'i-heroicons-home',
+    iconColor: 'primary',
+    progress: 65,
+    saved: 65000,
+    target: 100000,
+    likes: 234
   },
   {
-    number: '02',
-    title: 'Track Your Progress',
-    description: 'Log your savings regularly. Our system automatically calculates how much you need to save daily to reach your target.',
-    icon: 'i-heroicons-chart-bar-square',
-    color: 'success'
+    id: 2,
+    title: 'World Travel',
+    author: 'Mike Chen',
+    avatar: '👨',
+    icon: 'i-heroicons-globe-alt',
+    iconColor: 'success',
+    progress: 42,
+    saved: 8400,
+    target: 20000,
+    likes: 189
   },
   {
-    number: '03',
-    title: 'Share or Keep Private',
-    description: 'Choose to share your goals publicly to inspire others, or keep them private for personal tracking for some people only.',
-    icon: 'i-heroicons-users',
-    color: 'warning'
+    id: 3,
+    title: 'New Car',
+    author: 'Emma Davis',
+    avatar: '👧',
+    icon: 'i-heroicons-truck',
+    iconColor: 'warning',
+    progress: 78,
+    saved: 31200,
+    target: 40000,
+    likes: 156
   },
   {
-    number: '04',
-    title: 'Celebrate Success',
-    description: 'When you reach your goal, celebrate your achievement! Get badges and share your success with the large community.',
-    icon: 'i-heroicons-trophy',
-    color: 'error'
+    id: 4,
+    title: 'Wedding',
+    author: 'Alex Brown',
+    avatar: '🧑',
+    icon: 'i-heroicons-heart',
+    iconColor: 'error',
+    progress: 55,
+    saved: 16500,
+    target: 30000,
+    likes: 312
+  },
+  {
+    id: 5,
+    title: 'Education Fund',
+    author: 'Lisa Wang',
+    avatar: '👩‍🎓',
+    icon: 'i-heroicons-academic-cap',
+    iconColor: 'primary',
+    progress: 88,
+    saved: 44000,
+    target: 50000,
+    likes: 267
+  },
+  {
+    id: 6,
+    title: 'Emergency Fund',
+    author: 'Tom Wilson',
+    avatar: '👨‍💼',
+    icon: 'i-heroicons-shield-check',
+    iconColor: 'success',
+    progress: 92,
+    saved: 9200,
+    target: 10000,
+    likes: 445
+  },
+  {
+    id: 7,
+    title: 'Business Startup',
+    author: 'Nina Patel',
+    avatar: '👩‍💻',
+    icon: 'i-heroicons-building-office',
+    iconColor: 'warning',
+    progress: 35,
+    saved: 17500,
+    target: 50000,
+    likes: 198
+  },
+  {
+    id: 8,
+    title: 'Dream Vacation',
+    author: 'Chris Lee',
+    avatar: '🧑',
+    icon: 'i-heroicons-paper-airplane',
+    iconColor: 'error',
+    progress: 70,
+    saved: 7000,
+    target: 10000,
+    likes: 223
   }
 ]
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-TH', {
+    style: 'currency',
+    currency: 'THB',
+    minimumFractionDigits: 0
+  }).format(amount)
+}
 </script>
 
 <template>
-     <section id="how-it-works" class="py-20 sm:py-32 bg-white dark:bg-gray-950 relative overflow-hidden">
-    <!-- Background decoration -->
-    <div class="absolute inset-0 -z-10">
-      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-100/30 dark:bg-primary-900/10 rounded-full blur-3xl"></div>
-      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-100/30 dark:bg-purple-900/10 rounded-full blur-3xl"></div>
-    </div>
-
+  <section id="community" class="py-20 sm:py-32 bg-gray-50 dark:bg-gray-900">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->
       <div class="text-center max-w-3xl mx-auto mb-16">
         <UBadge color="primary" variant="subtle" size="lg" class="mb-4">
-          How It Works
+          {{ $t('community.badge') }}
         </UBadge>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
-          Simple Steps to
+          {{ $t('community.title') }}
           <span class="block bg-linear-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
-            Reach Your Dreams
+            {{ $t('community.titleHighlight') }}
           </span>
         </h2>
         <p class="text-lg text-gray-600 dark:text-gray-300">
-          Start saving smarter in just 4 easy steps.
+          {{ $t('community.subtitle') }}
         </p>
       </div>
 
-      <!-- Steps -->
-      <div class="relative max-w-6xl mx-auto">
-        <!-- Connection Line (Desktop) -->
-        <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-linear-to-r from-primary-200 via-purple-200 to-primary-200 dark:from-primary-900 dark:via-purple-900 dark:to-primary-900 -translate-y-1/2"></div>
-
-        <!-- Steps Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-          <div 
-            v-for="(step, index) in steps" 
-            :key="index"
-            class="relative"
-          >
-            <div class="relative z-10">
-              <!-- Number Badge -->
-              <div class="flex justify-center mb-6">
-                <div 
-                  class="relative w-20 h-20 rounded-full flex items-center justify-center font-bold text-xl shadow-lg"
-                  :class="{
-                    'bg-secondary-500 text-white': step.color === 'secondary',
-                    'bg-success-500 text-white': step.color === 'success',
-                    'bg-warning-500 text-white': step.color === 'warning',
-                    'bg-error-500 text-white': step.color === 'error',
-                  }"
-                >
-                  {{ step.number }}
+      <!-- Goals Grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div 
+          v-for="goal in communityGoals" 
+          :key="goal.id"
+          class="group"
+        >
+          <UCard class="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center space-x-2">
+                <div class="text-2xl">{{ goal.avatar }}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">
+                  @{{ goal.author.toLowerCase().replace(' ', '') }}
                 </div>
               </div>
-
-              <!-- Content Card -->
-              <UCard class="text-center h-full">
-                <div class="space-y-4">
-                  <!-- Icon -->
-                  <div class="flex justify-center">
-                    <div 
-                      class="w-14 h-14 rounded-xl flex items-center justify-center"
-                      :class="{
-                        'bg-secondary-100 dark:bg-secondary-900/30': step.color === 'secondary',
-                        'bg-success-100 dark:bg-success-900/30': step.color === 'success',
-                        'bg-warning-100 dark:bg-warning-900/30': step.color === 'warning',
-                        'bg-error-100 dark:bg-error-900/30': step.color === 'error',
-                      }"
-                    >
-                      <Icon 
-                        :name="step.icon" 
-                        class="w-7 h-7"
-                        :class="{
-                          'text-secondary-600 dark:text-secondary-400': step.color === 'secondary',
-                          'text-success-600 dark:text-success-400': step.color === 'success',
-                          'text-warning-600 dark:text-warning-400': step.color === 'warning',
-                          'text-error-600 dark:text-error-400': step.color === 'error',
-                        }"
-                      />
-                    </div>
-                  </div>
-
-                  <!-- Title & Description -->
-                  <div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                      {{ step.title }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400">
-                      {{ step.description }}
-                    </p>
-                  </div>
-                </div>
-              </UCard>
+              <div 
+                class="w-10 h-10 rounded-lg flex items-center justify-center"
+                :class="{
+                  'bg-primary-100 dark:bg-primary-900/30': goal.iconColor === 'primary',
+                  'bg-success-100 dark:bg-success-900/30': goal.iconColor === 'success',
+                  'bg-warning-100 dark:bg-warning-900/30': goal.iconColor === 'warning',
+                  'bg-error-100 dark:bg-error-900/30': goal.iconColor === 'error',
+                }"
+              >
+                <Icon 
+                  :name="goal.icon" 
+                  class="w-5 h-5"
+                  :class="{
+                    'text-primary-600': goal.iconColor === 'primary',
+                    'text-success-600': goal.iconColor === 'success',
+                    'text-warning-600': goal.iconColor === 'warning',
+                    'text-error-600': goal.iconColor === 'error',
+                  }"
+                />
+              </div>
             </div>
-          </div>
+
+            <!-- Title -->
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3">
+              {{ goal.title }}
+            </h3>
+
+            <!-- Progress -->
+            <div class="mb-3">
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-gray-600 dark:text-gray-400">{{ $t('community.progress') }}</span>
+                <span class="font-semibold text-primary-600 dark:text-primary-400">
+                  {{ goal.progress }}%
+                </span>
+              </div>
+              <UProgress v-model="goal.progress" size="sm" :aria-label="`${goal.title} progress: ${goal.progress}%`" />
+            </div>
+
+            <!-- Amount -->
+            <div class="flex justify-between text-sm mb-4">
+              <div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('community.saved') }}</div>
+                <div class="font-bold text-gray-900 dark:text-white">
+                  {{ formatCurrency(goal.saved) }}
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('community.goal') }}</div>
+                <div class="font-bold text-gray-900 dark:text-white">
+                  {{ formatCurrency(goal.target) }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Likes -->
+            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+              <Icon name="i-heroicons-heart-solid" class="w-4 h-4 text-error-500 mr-1" />
+              <span>{{ goal.likes }} {{ $t('community.likes') }}</span>
+            </div>
+          </UCard>
         </div>
       </div>
 
-      <!-- Bottom CTA -->
-      <div class="text-center mt-16">
-        <p class="text-gray-600 dark:text-gray-300 mb-6">
-          Ready to start your journey?
-        </p>
-        <UButton size="xl" color="primary" class="shadow-lg shadow-primary-500/50 px-4 cursor-pointer">
-          <Icon name="i-heroicons-rocket-launch" class="w-5 h-5" />
-          Create Your First Goal
+      <!-- CTA -->
+      <div class="text-center">
+        <UButton size="lg" variant="outline" class="cursor-pointer px-4">
+          {{ $t('community.exploreAll') }}
+          <Icon name="i-heroicons-arrow-right" class="w-5 h-5 ml-2" />
         </UButton>
       </div>
     </div>

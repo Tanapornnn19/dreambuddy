@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // สำหรับการแปลภาษา
-const { $t } = useI18n()
+const { $t, $localePath } = useI18n()
 
 // ตัวแปร state สำหรับ mobile menu
 const isMobileMenuOpen = ref(false)
@@ -21,7 +21,7 @@ const scrollToSection = (e: Event, href: string) => {
   const targetElement = document.getElementById(targetId)
   
   if (targetElement) {
-    const headerOffset = 80 // Height of sticky header + some padding
+    const headerOffset = 65 // Height of sticky header + some padding
     const elementPosition = targetElement.getBoundingClientRect().top
     const offsetPosition = elementPosition + window.pageYOffset - headerOffset
 
@@ -88,10 +88,10 @@ const toggleMobileMenu = () => {
           <!-- Theme Toggle -->
           <AppThemeToggle />
           
-          <UButton variant="ghost" size="md" class="cursor-pointer">
+          <UButton variant="ghost" size="md" class="cursor-pointer" @click="$router.push($localePath('/auth/login'))">
             {{ $t('nav.signIn') }}
           </UButton>
-          <UButton size="md" color="primary" class="cursor-pointer">
+          <UButton size="md" color="primary" class="cursor-pointer" @click="$router.push($localePath('/auth/register'))">
             {{ $t('nav.startFree') }}
           </UButton>
         </div>
@@ -147,10 +147,10 @@ const toggleMobileMenu = () => {
 
           <!-- Mobile CTA Buttons -->
           <div class="flex flex-col space-y-2 px-4">
-            <UButton variant="ghost" size="md" block class="cursor-pointer">
+            <UButton variant="ghost" size="md" block class="cursor-pointer" @click="$router.push($localePath('/auth/login')); isMobileMenuOpen = false">
               {{ $t('nav.signIn') }}
             </UButton>
-            <UButton size="md" color="primary" block class="cursor-pointer">
+            <UButton size="md" color="primary" block class="cursor-pointer" @click="$router.push($localePath('/auth/register')); isMobileMenuOpen = false">
               {{ $t('nav.startFree') }}
             </UButton>
           </div>
